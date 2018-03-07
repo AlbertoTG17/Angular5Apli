@@ -20,19 +20,19 @@ const appRoutes: Routes = [
     data: { title: 'Home' }
   },
   {
-    path: 'blog',
+    path: 'blogg',
     component: BlogComponent,
-    data: { title: 'Home' }
+    data: { title: 'Blog' }
   },
   {
     path: 'servicios',
     component: ServiciosComponent,
-    data: { title: 'Home' }
+    data: { title: 'Servicios' }
   },
   {
     path: 'contacto',
     component: ContactoComponent,
-    data: { title: 'Home' }
+    data: { title: 'Contacto' }
   }
 ];
 

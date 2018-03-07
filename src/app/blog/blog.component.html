@@ -1,3 +1,10 @@
-<p>
-  blog works!
-</p>
+<table class="table">
+  <tbody>
+    <tr *ngFor="let b of libros">
+      <td>{{b.titulo }}</td>
+      <td><img alt="no va" src="{{b.foto }}" width="50px"> </td>
+      <td>{{b.contenido }}</td>
+      <td>{{b.fecha }}</td>
+    </tr>
+  </tbody> 
+</table>

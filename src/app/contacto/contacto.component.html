@@ -1,10 +1,10 @@
 <div align="center">
 
-  <form>
+  <form (ngSubmit)="saveContacto()" #contactoForm="ngForm">
 
-    <input type="text" name="mail" id="mail" placeholder="Mail"> <br>
-    <input type="text" name="pregunta" id="pregunta" placeholder="Tu pregunta"> <br>
-    <input type="date" name="fecha" id="fecha"> <br>
+    <input type="text" name="mail" id="mail" placeholder="Mail" [(ngModel)]="contacto.mail"> <br>
+    <input type="text" name="pregunta" id="pregunta" placeholder="Tu pregunta" [(ngModel)]="contacto.pregunta"> <br>
+    <input type="date" name="fecha" id="fecha" [(ngModel)]="contacto.fecha"> <br>
 
     <input type="submit">
 

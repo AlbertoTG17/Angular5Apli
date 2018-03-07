@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Blog = require('../models/Book.js');
+var Contacto = require('../models/Contacto.js');
 
 /* GET ALL BLOG*/
 router.get('/', function (req, res, next) {
@@ -18,10 +19,10 @@ router.get('/:id', function (req, res, next) {
         res.json(post);
     });
 });
-
-/* SAVE BOOK 
+*/
+//SAVE BOOK 
 router.post('/', function (req, res, next) {
-    Book.create(req.body, function (err, post) {
+    Contacto.create(req.body, function (err, post) {
         if (err) return next(err);
         res.json(post);
     });

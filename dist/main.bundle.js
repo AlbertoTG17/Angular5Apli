@@ -69,16 +69,17 @@ var AppComponent = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__("./src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__header_header_component__ = __webpack_require__("./src/app/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__footer_footer_component__ = __webpack_require__("./src/app/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav_nav_component__ = __webpack_require__("./src/app/nav/nav.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__blog_blog_component__ = __webpack_require__("./src/app/blog/blog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__servicios_servicios_component__ = __webpack_require__("./src/app/servicios/servicios.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__contacto_contacto_component__ = __webpack_require__("./src/app/contacto/contacto.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__("./src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__header_header_component__ = __webpack_require__("./src/app/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__footer_footer_component__ = __webpack_require__("./src/app/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__nav_nav_component__ = __webpack_require__("./src/app/nav/nav.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__blog_blog_component__ = __webpack_require__("./src/app/blog/blog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__servicios_servicios_component__ = __webpack_require__("./src/app/servicios/servicios.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__contacto_contacto_component__ = __webpack_require__("./src/app/contacto/contacto.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -97,25 +98,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var appRoutes = [
     {
         path: 'home',
-        component: __WEBPACK_IMPORTED_MODULE_7__home_home_component__["a" /* HomeComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_8__home_home_component__["a" /* HomeComponent */],
         data: { title: 'Home' }
     },
     {
         path: 'blogg',
-        component: __WEBPACK_IMPORTED_MODULE_8__blog_blog_component__["a" /* BlogComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_9__blog_blog_component__["a" /* BlogComponent */],
         data: { title: 'Blog' }
     },
     {
         path: 'servicios',
-        component: __WEBPACK_IMPORTED_MODULE_9__servicios_servicios_component__["a" /* ServiciosComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_10__servicios_servicios_component__["a" /* ServiciosComponent */],
         data: { title: 'Servicios' }
     },
     {
         path: 'contacto',
-        component: __WEBPACK_IMPORTED_MODULE_10__contacto_contacto_component__["a" /* ContactoComponent */],
+        component: __WEBPACK_IMPORTED_MODULE_11__contacto_contacto_component__["a" /* ContactoComponent */],
         data: { title: 'Contacto' }
     }
 ];
@@ -125,22 +127,23 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_3__header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_4__footer_footer_component__["a" /* FooterComponent */],
-                __WEBPACK_IMPORTED_MODULE_5__nav_nav_component__["a" /* NavComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__blog_blog_component__["a" /* BlogComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__servicios_servicios_component__["a" /* ServiciosComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__contacto_contacto_component__["a" /* ContactoComponent */]
+                __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_4__header_header_component__["a" /* HeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_5__footer_footer_component__["a" /* FooterComponent */],
+                __WEBPACK_IMPORTED_MODULE_6__nav_nav_component__["a" /* NavComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__home_home_component__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_9__blog_blog_component__["a" /* BlogComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__servicios_servicios_component__["a" /* ServiciosComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__contacto_contacto_component__["a" /* ContactoComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_6__angular_router__["a" /* RouterModule */].forRoot(appRoutes, { enableTracing: true }),
-                __WEBPACK_IMPORTED_MODULE_11__angular_common_http__["b" /* HttpClientModule */]
+                __WEBPACK_IMPORTED_MODULE_7__angular_router__["b" /* RouterModule */].forRoot(appRoutes, { enableTracing: true }),
+                __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */]
             ],
             providers: [],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -160,7 +163,7 @@ module.exports = ""
 /***/ "./src/app/blog/blog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table\">\n  \n  <tbody>\n    <tr *ngFor=\"let b of libros\">\n      <td>{{b.titulo }}</td>\n      <td><img alt=\"no va\" src=\"{{b.foto }}\"> </td>\n      <td>{{b.contenido }}</td>\n      <td>{{b.fecha }}</td>\n    </tr>\n  </tbody> \n</table>"
+module.exports = "<table class=\"table\">\n  <tbody>\n    <tr *ngFor=\"let b of libros\">\n      <td>{{b.titulo }}</td>\n      <td><img alt=\"no va\" src=\"{{b.foto }}\" width=\"50px\" height=\"50px\"> </td>\n      <td>{{b.contenido }}</td>\n      <td>{{b.fecha }}</td>\n    </tr>\n  </tbody> \n</table>"
 
 /***/ }),
 
@@ -199,7 +202,7 @@ var BlogComponent = /** @class */ (function () {
             selector: 'app-blog',
             template: __webpack_require__("./src/app/blog/blog.component.html"),
             styles: [__webpack_require__("./src/app/blog/blog.component.css")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* ViewEncapsulation */].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
     ], BlogComponent);
@@ -220,7 +223,7 @@ module.exports = ""
 /***/ "./src/app/contacto/contacto.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div align=\"center\">\n\n  <form>\n\n    <input type=\"text\" name=\"mail\" id=\"mail\" placeholder=\"Mail\"> <br>\n    <input type=\"text\" name=\"pregunta\" id=\"pregunta\" placeholder=\"Tu pregunta\"> <br>\n    <input type=\"date\" name=\"fecha\" id=\"fecha\"> <br>\n\n    <input type=\"submit\">\n\n  </form>\n\n\n</div>"
+module.exports = "<div align=\"center\">\n\n  <form (ngSubmit) = \"saveContacto()\" #contactoForm=\"ngForm\">\n\n    <input type=\"text\" name=\"mail\" id=\"mail\" placeholder=\"Mail\" [(ngModel)]=\"contacto.mail\"> <br>\n    <input type=\"text\" name=\"pregunta\" id=\"pregunta\" placeholder=\"Tu pregunta\" [(ngModel)]=\"contacto.pregunta\"> <br>\n    <input type=\"date\" name=\"fecha\" id=\"fecha\" [(ngModel)]=\"contacto.fecha\"> <br>\n\n    <input type=\"submit\">\n\n  </form>\n\n\n</div>"
 
 /***/ }),
 
@@ -230,6 +233,8 @@ module.exports = "<div align=\"center\">\n\n  <form>\n\n    <input type=\"text\"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -240,18 +245,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var ContactoComponent = /** @class */ (function () {
-    function ContactoComponent() {
+    function ContactoComponent(http, router) {
+        this.http = http;
+        this.router = router;
+        this.book = {};
     }
     ContactoComponent.prototype.ngOnInit = function () {
+    };
+    ContactoComponent.prototype.saveContacto = function () {
+        var _this = this;
+        console.log("Entrando");
+        this.http.post('/book', this.book)
+            .subscribe(function (res) {
+            var id = res['_id'];
+            _this.router.navigate(['/contacto', id]);
+        }, function (err) {
+            console.log(err);
+        });
     };
     ContactoComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-contacto',
             template: __webpack_require__("./src/app/contacto/contacto.component.html"),
-            styles: [__webpack_require__("./src/app/contacto/contacto.component.css")]
+            styles: [__webpack_require__("./src/app/contacto/contacto.component.css")],
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* ViewEncapsulation */].None
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]])
     ], ContactoComponent);
     return ContactoComponent;
 }());
@@ -548,7 +570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });

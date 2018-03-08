@@ -1,14 +1,25 @@
-<div align="center">
-
-  <form (ngSubmit)="saveContacto()" #contactoForm="ngForm">
-
-    <input type="text" name="mail" id="mail" placeholder="Mail" [(ngModel)]="contacto.mail"> <br>
-    <input type="text" name="pregunta" id="pregunta" placeholder="Tu pregunta" [(ngModel)]="contacto.pregunta"> <br>
-    <input type="date" name="fecha" id="fecha" [(ngModel)]="contacto.fecha"> <br>
-
-    <input type="submit">
-
+<!--<div>
+  <iframe width="350" height="430" src="https://console.dialogflow.com/api-client/demo/embedded/1ccb9168-32df-4138-b163-d2705a8e8bd6"></iframe>
+</div>-->
+<div class="container" style="text-align: center">
+<form (ngSubmit)="saveContacto()" #contactoForm="ngForm">
+    <div class="form-group" >
+      <label for="email">Email</label>
+      <input type="text" class="form-control" placeholder="name@example.com" [(ngModel)]="contacto.mail" name="mail" required>
+    </div>
+      <div class='form-group'>
+        <label for="fecha">Fecha</label><br>
+        <input type='date' class="form-control" [(ngModel)]="contacto.fecha" name="fecha" required>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+    
+    
+    <div class="form-group">
+      <label for="comentarios">Comentarios</label>
+      <textarea class="form-control" [(ngModel)]="contacto.comentarios" name="comentarios" required rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!contactoForm.form.valid">Enviar</button>
   </form>
-
-
 </div>

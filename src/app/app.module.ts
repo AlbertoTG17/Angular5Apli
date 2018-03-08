@@ -1,17 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
+import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { NavComponent } from './nav/nav.component';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { BlogComponent } from './blog/blog.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { ContactoComponent } from './contacto/contacto.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { ErrorComponent } from './error/error.component';
+
+import { CookieService } from 'ngx-cookie-service';
+
+import {SessionStorageService, LocalStorageService} from 'ngx-webstorage';
 
 const appRoutes: Routes = [
   {
@@ -20,7 +24,7 @@ const appRoutes: Routes = [
     data: { title: 'Home' }
   },
   {
-    path: 'blogg',
+    path: 'blogs',
     component: BlogComponent,
     data: { title: 'Blog' }
   },
@@ -30,31 +34,39 @@ const appRoutes: Routes = [
     data: { title: 'Servicios' }
   },
   {
-    path: 'contacto',
+    path: 'contactos',
     component: ContactoComponent,
     data: { title: 'Contacto' }
+  },
+  { path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+  { path: '**',
+  component: ErrorComponent,
+  data: { title: 'Contacto' }
   }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    NavComponent,
-    HomeComponent,
     BlogComponent,
     ServiciosComponent,
-    ContactoComponent
+    ContactoComponent,
+    HomeComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }, // <-- debugging purposes only   
-    ),
+    FormsModule,
     HttpClientModule,
-    FormsModule
+    RouterModule.forRoot(
+    appRoutes,
+    { enableTracing: true } // <-- debugging purposes only
+  )
   ],
-  providers: [],
+  providers: [CookieService,LocalStorageService,SessionStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-
 var ContactoSchema = new mongoose.Schema({
-  mail: String,
-  pregunta: String,
-  calendario: Date,
-  
-});
+   // id: int,
+    mail: String,
+    fecha: String,
+    comentarios: String,
 
-module.exports = mongoose.model('Contacto', ContactoSchema);
+   // updated_date: { type: Date, default: Date.now },
+  });
+  module.exports = mongoose.model('Contacto', ContactoSchema);

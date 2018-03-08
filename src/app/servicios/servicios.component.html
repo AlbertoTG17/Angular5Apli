@@ -1,27 +1,6 @@
-<!--
-  <ul>
-    <li *ngFor="let country of countries">País:{{country.name}}&nbsp;
-       Bandera: <img alt="no va" src="{{country.flag}}" width="100px"></li>
-  </ul>
--->
-
-<div align="center">
-  <table class="table" style="width: 90%">
-      <thead>
-        <tr>         
-          <th scope="col">Pais</th>
-          <th scope="col">Bandera</th>
-          <th scope="col">Capital</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let country of countries">
-        <tr>          
-          <td>{{country.name}}</td>
-          <td><img alt="no va" src="{{country.flag}}" width="100px"></td>
-          <td>{{country.capital}}</td>
-        </tr>   
-    </tbody>
-  </table>
-</div>
-
-
+<h2>Countries</h2>
+    <li *ngFor="let country of countries">
+        <img src="{{country.flag}}" width="5%">
+      ----------------{{country.name}}
+      ----------------{{country.capital}}
+    </li>

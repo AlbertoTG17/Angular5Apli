@@ -1,19 +1,28 @@
-console.log("Entrando en app.js");
-
 var express = require('express');
 var path = require('path');
-//var logger = require('morgan');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var book = require('./routes/book');
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/temas')
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
+
+
+var blog = require('./routes/blog');
+var contacto = require('./routes/contacto');
 var app = express();
 
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/blogg', express.static(path.join(__dirname, 'dist')));
-app.use('/book', book);
+app.use('/blogs', express.static(path.join(__dirname, 'dist')));
+app.use('/blog', blog);
+app.use('/contactos', express.static(path.join(__dirname, 'dist')));
+app.use('/contacto', contacto);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,16 +41,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-//Configuracion de conexion con mongoose
-var mongoose = require('mongoose');
-//mongoose.Promise = require('bluebird');
-
-mongoose.connect('mongodb://localhost/blog', { useMongoClient: true })
-  
-  .then(() =>  console.log('connection succesful'))
-  .catch((err) => console.error(err));
-  console.log("Conexion OK");
 
 module.exports = app;

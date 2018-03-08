@@ -86485,6 +86485,857 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["_8" /* Version */
 
 /***/ }),
 
+/***/ "./node_modules/ngx-cookie-service/cookie-service/cookie.service.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CookieService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+// This service is based on the `ng2-cookies` package which sadly is not a service and does
+// not use `DOCUMENT` injection and therefore doesn't work well with AoT production builds.
+// Package: https://github.com/BCJTI/ng2-cookies
+
+
+var CookieService = (function () {
+    function CookieService(
+        // The type `Document` may not be used here. Although a fix is on its way,
+        // we will go with `any` for now to support Angular 2.4.x projects.
+        // Issue: https://github.com/angular/angular/issues/12631
+        // Fix: https://github.com/angular/angular/pull/14894
+        document) {
+        this.document = document;
+        // To avoid issues with server side prerendering, check if `document` is defined.
+        this.documentIsAccessible = document !== undefined;
+    }
+    /**
+     * @param name Cookie name
+     * @returns {boolean}
+     */
+    CookieService.prototype.check = function (name) {
+        if (!this.documentIsAccessible) {
+            return false;
+        }
+        name = encodeURIComponent(name);
+        var regExp = this.getCookieRegExp(name);
+        var exists = regExp.test(this.document.cookie);
+        return exists;
+    };
+    /**
+     * @param name Cookie name
+     * @returns {any}
+     */
+    CookieService.prototype.get = function (name) {
+        if (this.documentIsAccessible && this.check(name)) {
+            name = encodeURIComponent(name);
+            var regExp = this.getCookieRegExp(name);
+            var result = regExp.exec(this.document.cookie);
+            return decodeURIComponent(result[1]);
+        }
+        else {
+            return '';
+        }
+    };
+    /**
+     * @returns {}
+     */
+    CookieService.prototype.getAll = function () {
+        if (!this.documentIsAccessible) {
+            return {};
+        }
+        var cookies = {};
+        var document = this.document;
+        if (document.cookie && document.cookie !== '') {
+            var split = document.cookie.split(';');
+            for (var i = 0; i < split.length; i += 1) {
+                var currentCookie = split[i].split('=');
+                currentCookie[0] = currentCookie[0].replace(/^ /, '');
+                cookies[decodeURIComponent(currentCookie[0])] = decodeURIComponent(currentCookie[1]);
+            }
+        }
+        return cookies;
+    };
+    /**
+     * @param name    Cookie name
+     * @param value   Cookie value
+     * @param expires Number of days until the cookies expires or an actual `Date`
+     * @param path    Cookie path
+     * @param domain  Cookie domain
+     * @param secure  Secure flag
+     */
+    CookieService.prototype.set = function (name, value, expires, path, domain, secure) {
+        if (!this.documentIsAccessible) {
+            return;
+        }
+        var cookieString = encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';';
+        if (expires) {
+            if (typeof expires === 'number') {
+                var dateExpires = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
+                cookieString += 'expires=' + dateExpires.toUTCString() + ';';
+            }
+            else {
+                cookieString += 'expires=' + expires.toUTCString() + ';';
+            }
+        }
+        if (path) {
+            cookieString += 'path=' + path + ';';
+        }
+        if (domain) {
+            cookieString += 'domain=' + domain + ';';
+        }
+        if (secure) {
+            cookieString += 'secure;';
+        }
+        this.document.cookie = cookieString;
+    };
+    /**
+     * @param name   Cookie name
+     * @param path   Cookie path
+     * @param domain Cookie domain
+     */
+    CookieService.prototype.delete = function (name, path, domain) {
+        if (!this.documentIsAccessible) {
+            return;
+        }
+        this.set(name, '', -1, path, domain);
+    };
+    /**
+     * @param path   Cookie path
+     * @param domain Cookie domain
+     */
+    CookieService.prototype.deleteAll = function (path, domain) {
+        if (!this.documentIsAccessible) {
+            return;
+        }
+        var cookies = this.getAll();
+        for (var cookieName in cookies) {
+            if (cookies.hasOwnProperty(cookieName)) {
+                this.delete(cookieName, path, domain);
+            }
+        }
+    };
+    /**
+     * @param name Cookie name
+     * @returns {RegExp}
+     */
+    CookieService.prototype.getCookieRegExp = function (name) {
+        var escapedName = name.replace(/([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/ig, '\\$1');
+        return new RegExp('(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g');
+    };
+    return CookieService;
+}());
+
+CookieService.decorators = [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+];
+/** @nocollapse */
+CookieService.ctorParameters = function () { return [
+    { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* DOCUMENT */],] },] },
+]; };
+//# sourceMappingURL=cookie.service.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-cookie-service/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cookie_service_cookie_service__ = __webpack_require__("./node_modules/ngx-cookie-service/cookie-service/cookie.service.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__cookie_service_cookie_service__["a"]; });
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/app.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export WEBSTORAGE_CONFIG */
+/* unused harmony export Ng2Webstorage */
+/* unused harmony export provideConfig */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/webStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__interfaces_config__ = __webpack_require__("./node_modules/ngx-webstorage/dist/interfaces/config.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_keyStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/keyStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__helpers_storageObserver__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/storageObserver.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__interfaces_index__ = __webpack_require__("./node_modules/ngx-webstorage/dist/interfaces/index.js");
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__decorators_index__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/index.js");
+/* unused harmony namespace reexport */
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__services_index__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__services_index__["b"]; });
+
+
+
+
+
+
+
+
+
+
+var WEBSTORAGE_CONFIG = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('WEBSTORAGE_CONFIG');
+var Ng2Webstorage = (function () {
+    function Ng2Webstorage(ngZone, config) {
+        this.ngZone = ngZone;
+        if (config) {
+            __WEBPACK_IMPORTED_MODULE_5__helpers_keyStorage__["a" /* KeyStorageHelper */].setStorageKeyPrefix(config.prefix);
+            __WEBPACK_IMPORTED_MODULE_5__helpers_keyStorage__["a" /* KeyStorageHelper */].setStorageKeySeparator(config.separator);
+            __WEBPACK_IMPORTED_MODULE_5__helpers_keyStorage__["a" /* KeyStorageHelper */].setCaseSensitivity(config.caseSensitive);
+        }
+        this.initStorageListener();
+        __WEBPACK_IMPORTED_MODULE_6__helpers_storageObserver__["a" /* StorageObserverHelper */].initStorage();
+    }
+    Ng2Webstorage.forRoot = function (config) {
+        return {
+            ngModule: Ng2Webstorage,
+            providers: [
+                {
+                    provide: WEBSTORAGE_CONFIG,
+                    useValue: config
+                },
+                {
+                    provide: __WEBPACK_IMPORTED_MODULE_4__interfaces_config__["a" /* WebstorageConfig */],
+                    useFactory: provideConfig,
+                    deps: [
+                        WEBSTORAGE_CONFIG
+                    ]
+                }
+            ]
+        };
+    };
+    Ng2Webstorage.prototype.initStorageListener = function () {
+        var _this = this;
+        if (typeof window !== 'undefined') {
+            window.addEventListener('storage', function (event) {
+                return _this.ngZone.run(function () {
+                    var storage = window.sessionStorage === event.storageArea ? __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].session : __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].local;
+                    if (event.key === null)
+                        __WEBPACK_IMPORTED_MODULE_3__helpers_webStorage__["a" /* WebStorageHelper */].refreshAll(storage);
+                    else
+                        __WEBPACK_IMPORTED_MODULE_3__helpers_webStorage__["a" /* WebStorageHelper */].refresh(storage, event.key);
+                });
+            });
+        }
+    };
+    Ng2Webstorage.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
+                    declarations: [],
+                    providers: [__WEBPACK_IMPORTED_MODULE_2__services_index__["b" /* SessionStorageService */], __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* LocalStorageService */]],
+                    imports: []
+                },] },
+    ];
+    /** @nocollapse */
+    Ng2Webstorage.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* NgZone */], },
+        { type: __WEBPACK_IMPORTED_MODULE_4__interfaces_config__["a" /* WebstorageConfig */], decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Optional */] }, { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_4__interfaces_config__["a" /* WebstorageConfig */],] },] },
+    ]; };
+    return Ng2Webstorage;
+}());
+
+function provideConfig(config) {
+    return new __WEBPACK_IMPORTED_MODULE_4__interfaces_config__["a" /* WebstorageConfig */](config);
+}
+//# sourceMappingURL=app.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/constants/lib.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LIB_KEY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return LIB_KEY_SEPARATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LIB_KEY_CASE_SENSITIVE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return STORAGE_NAMES; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+
+var LIB_KEY = 'ng2-webstorage';
+var LIB_KEY_SEPARATOR = '|';
+var LIB_KEY_CASE_SENSITIVE = false;
+var STORAGE_NAMES = (_a = {},
+    _a[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].local] = 'local',
+    _a[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].session] = 'session',
+    _a);
+var _a;
+//# sourceMappingURL=lib.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/decorators/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__localStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/localStorage.js");
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sessionStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/sessionStorage.js");
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/webStorage.js");
+/* unused harmony namespace reexport */
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/decorators/localStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export LocalStorage */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/webStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+
+
+function LocalStorage(webSKey, defaultValue) {
+    return function (targetedClass, raw) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__webStorage__["a" /* WebStorageDecorator */])(webSKey, __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].local, targetedClass, raw, defaultValue);
+    };
+}
+//# sourceMappingURL=localStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/decorators/sessionStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export SessionStorage */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/decorators/webStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+
+
+function SessionStorage(webSKey, defaultValue) {
+    return function (targetedClass, raw) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__webStorage__["a" /* WebStorageDecorator */])(webSKey, __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].session, targetedClass, raw, defaultValue);
+    };
+}
+//# sourceMappingURL=sessionStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/decorators/webStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export WebStorage */
+/* harmony export (immutable) */ __webpack_exports__["a"] = WebStorageDecorator;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_index__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_storageObserver__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/storageObserver.js");
+
+
+function WebStorage(webSKey, sType, defaultValue) {
+    if (defaultValue === void 0) { defaultValue = null; }
+    return function (targetedClass, raw) {
+        WebStorageDecorator(webSKey, sType, targetedClass, raw, defaultValue);
+    };
+}
+function WebStorageDecorator(webSKey, sType, targetedClass, raw, defaultValue) {
+    var key = webSKey || raw;
+    Object.defineProperty(targetedClass, raw, {
+        get: function () {
+            var sKey = __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(key);
+            return __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].retrieve(sType, sKey);
+        },
+        set: function (value) {
+            var sKey = __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(key);
+            this[sKey] = value;
+            __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].store(sType, sKey, value);
+        }
+    });
+    if (targetedClass[raw] === null && defaultValue !== undefined) {
+        var sub_1 = __WEBPACK_IMPORTED_MODULE_1__helpers_storageObserver__["a" /* StorageObserverHelper */].storageInit$.subscribe(function () {
+            targetedClass[raw] = defaultValue;
+            sub_1.unsubscribe();
+        });
+    }
+}
+//# sourceMappingURL=webStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/enums/storage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return STORAGE; });
+var STORAGE;
+(function (STORAGE) {
+    STORAGE[STORAGE["local"] = 0] = "local";
+    STORAGE[STORAGE["session"] = 1] = "session";
+})(STORAGE || (STORAGE = {}));
+//# sourceMappingURL=storage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/helpers/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__keyStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/keyStorage.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__keyStorage__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__storageObserver__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/storageObserver.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/webStorage.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__webStorage__["a"]; });
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/helpers/keyStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export isManagedKey */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeyStorageHelper; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_lib__ = __webpack_require__("./node_modules/ngx-webstorage/dist/constants/lib.js");
+
+var CUSTOM_LIB_KEY = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["a" /* LIB_KEY */];
+var CUSTOM_LIB_KEY_SEPARATOR = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["c" /* LIB_KEY_SEPARATOR */];
+var CUSTOM_LIB_KEY_CASE_SENSITIVE = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["b" /* LIB_KEY_CASE_SENSITIVE */];
+function isManagedKey(sKey) {
+    return sKey.indexOf(CUSTOM_LIB_KEY + CUSTOM_LIB_KEY_SEPARATOR) === 0;
+}
+var KeyStorageHelper = (function () {
+    function KeyStorageHelper() {
+    }
+    KeyStorageHelper.isManagedKey = function (sKey) {
+        return sKey.indexOf(CUSTOM_LIB_KEY + CUSTOM_LIB_KEY_SEPARATOR) === 0;
+    };
+    KeyStorageHelper.retrieveKeysFromStorage = function (storage) {
+        return Object.keys(storage).filter(isManagedKey);
+    };
+    KeyStorageHelper.genKey = function (raw) {
+        if (typeof raw !== 'string')
+            throw Error('attempt to generate a storage key with a non string value');
+        return "" + CUSTOM_LIB_KEY + CUSTOM_LIB_KEY_SEPARATOR + this.formatKey(raw);
+    };
+    KeyStorageHelper.formatKey = function (raw) {
+        var key = raw.toString();
+        return CUSTOM_LIB_KEY_CASE_SENSITIVE ? key : key.toLowerCase();
+    };
+    KeyStorageHelper.setStorageKeyPrefix = function (key) {
+        if (key === void 0) { key = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["a" /* LIB_KEY */]; }
+        CUSTOM_LIB_KEY = key;
+    };
+    KeyStorageHelper.setCaseSensitivity = function (enable) {
+        if (enable === void 0) { enable = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["b" /* LIB_KEY_CASE_SENSITIVE */]; }
+        CUSTOM_LIB_KEY_CASE_SENSITIVE = enable;
+    };
+    KeyStorageHelper.setStorageKeySeparator = function (separator) {
+        if (separator === void 0) { separator = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["c" /* LIB_KEY_SEPARATOR */]; }
+        CUSTOM_LIB_KEY_SEPARATOR = separator;
+    };
+    return KeyStorageHelper;
+}());
+
+//# sourceMappingURL=keyStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/helpers/mockStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MockStorageHelper; });
+var MockStorageHelper = (function () {
+    function MockStorageHelper() {
+    }
+    MockStorageHelper.isSecuredField = function (field) {
+        return !!~MockStorageHelper.securedFields.indexOf(field);
+    };
+    MockStorageHelper.getStorage = function (sType) {
+        if (!this.mockStorages[sType])
+            this.mockStorages[sType] = MockStorageHelper.generateStorage();
+        return this.mockStorages[sType];
+    };
+    MockStorageHelper.generateStorage = function () {
+        var storage = {};
+        Object.defineProperties(storage, {
+            setItem: {
+                writable: false,
+                enumerable: false,
+                configurable: false,
+                value: function (key, value) {
+                    if (!MockStorageHelper.isSecuredField(key))
+                        this[key] = value;
+                },
+            },
+            getItem: {
+                writable: false,
+                enumerable: false,
+                configurable: false,
+                value: function (key) {
+                    return !MockStorageHelper.isSecuredField(key) ? this[key] || null : null;
+                },
+            },
+            removeItem: {
+                writable: false,
+                enumerable: false,
+                configurable: false,
+                value: function (key) {
+                    if (!MockStorageHelper.isSecuredField(key))
+                        delete this[key];
+                },
+            },
+            length: {
+                enumerable: false,
+                configurable: false,
+                get: function () {
+                    return Object.keys(this).length;
+                }
+            }
+        });
+        return storage;
+    };
+    MockStorageHelper.securedFields = ['setItem', 'getItem', 'removeItem', 'length'];
+    MockStorageHelper.mockStorages = {};
+    return MockStorageHelper;
+}());
+
+//# sourceMappingURL=mockStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/helpers/storageObserver.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StorageObserverHelper; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+
+var StorageObserverHelper = (function () {
+    function StorageObserverHelper() {
+    }
+    StorageObserverHelper.observe = function (sType, sKey) {
+        var oKey = this.genObserverKey(sType, sKey);
+        if (oKey in this.observers)
+            return this.observers[oKey];
+        return this.observers[oKey] = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+    };
+    StorageObserverHelper.emit = function (sType, sKey, value) {
+        var oKey = this.genObserverKey(sType, sKey);
+        if (oKey in this.observers)
+            this.observers[oKey].emit(value);
+    };
+    StorageObserverHelper.genObserverKey = function (sType, sKey) {
+        return sType + '|' + sKey;
+    };
+    StorageObserverHelper.initStorage = function () {
+        StorageObserverHelper.storageInitStream.emit(true);
+    };
+    StorageObserverHelper.observers = {};
+    StorageObserverHelper.storageInitStream = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+    StorageObserverHelper.storageInit$ = StorageObserverHelper.storageInitStream.asObservable();
+    return StorageObserverHelper;
+}());
+
+//# sourceMappingURL=storageObserver.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/helpers/webStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebStorageHelper; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__storageObserver__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/storageObserver.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/keyStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mockStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/mockStorage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants_lib__ = __webpack_require__("./node_modules/ngx-webstorage/dist/constants/lib.js");
+
+
+
+
+
+var CACHED = (_a = {}, _a[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].local] = {}, _a[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].session] = {}, _a);
+var STORAGE_AVAILABILITY = (_b = {}, _b[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].local] = null, _b[__WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].session] = null, _b);
+var WebStorageHelper = (function () {
+    function WebStorageHelper() {
+    }
+    WebStorageHelper.store = function (sType, sKey, value) {
+        this.getStorage(sType).setItem(sKey, JSON.stringify(value));
+        CACHED[sType][sKey] = value;
+        __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a" /* StorageObserverHelper */].emit(sType, sKey, value);
+    };
+    WebStorageHelper.retrieve = function (sType, sKey) {
+        if (sKey in CACHED[sType])
+            return CACHED[sType][sKey];
+        var value = WebStorageHelper.retrieveFromStorage(sType, sKey);
+        if (value !== null)
+            CACHED[sType][sKey] = value;
+        return value;
+    };
+    WebStorageHelper.retrieveFromStorage = function (sType, sKey) {
+        var data = null;
+        try {
+            data = JSON.parse(this.getStorage(sType).getItem(sKey));
+        }
+        catch (err) {
+            console.warn("invalid value for " + sKey);
+        }
+        return data;
+    };
+    WebStorageHelper.refresh = function (sType, sKey) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__keyStorage__["a" /* KeyStorageHelper */].isManagedKey(sKey))
+            return;
+        var value = WebStorageHelper.retrieveFromStorage(sType, sKey);
+        if (value === null) {
+            delete CACHED[sType][sKey];
+            __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a" /* StorageObserverHelper */].emit(sType, sKey, null);
+        }
+        else if (value !== CACHED[sType][sKey]) {
+            CACHED[sType][sKey] = value;
+            __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a" /* StorageObserverHelper */].emit(sType, sKey, value);
+        }
+    };
+    WebStorageHelper.refreshAll = function (sType) {
+        Object.keys(CACHED[sType]).forEach(function (sKey) { return WebStorageHelper.refresh(sType, sKey); });
+    };
+    WebStorageHelper.clearAll = function (sType) {
+        var storage = this.getStorage(sType);
+        __WEBPACK_IMPORTED_MODULE_2__keyStorage__["a" /* KeyStorageHelper */].retrieveKeysFromStorage(storage)
+            .forEach(function (sKey) {
+            storage.removeItem(sKey);
+            delete CACHED[sType][sKey];
+            __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a" /* StorageObserverHelper */].emit(sType, sKey, null);
+        });
+    };
+    WebStorageHelper.clear = function (sType, sKey) {
+        this.getStorage(sType).removeItem(sKey);
+        delete CACHED[sType][sKey];
+        __WEBPACK_IMPORTED_MODULE_1__storageObserver__["a" /* StorageObserverHelper */].emit(sType, sKey, null);
+    };
+    WebStorageHelper.getStorage = function (sType) {
+        if (this.isStorageAvailable(sType))
+            return this.getWStorage(sType);
+        else
+            return __WEBPACK_IMPORTED_MODULE_3__mockStorage__["a" /* MockStorageHelper */].getStorage(sType);
+    };
+    WebStorageHelper.getWStorage = function (sType) {
+        var storage;
+        switch (sType) {
+            case __WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].local:
+                storage = localStorage;
+                break;
+            case __WEBPACK_IMPORTED_MODULE_0__enums_storage__["a" /* STORAGE */].session:
+                storage = sessionStorage;
+                break;
+            default:
+                throw Error('invalid storage type');
+        }
+        return storage;
+    };
+    WebStorageHelper.isStorageAvailable = function (sType) {
+        if (typeof STORAGE_AVAILABILITY[sType] === 'boolean')
+            return STORAGE_AVAILABILITY[sType];
+        var isAvailable = true, storage;
+        try {
+            storage = this.getWStorage(sType);
+            if (typeof storage === 'object') {
+                storage.setItem('test-storage', 'foobar');
+                storage.removeItem('test-storage');
+            }
+            else
+                isAvailable = false;
+        }
+        catch (e) {
+            isAvailable = false;
+        }
+        if (!isAvailable)
+            console.warn(__WEBPACK_IMPORTED_MODULE_4__constants_lib__["d" /* STORAGE_NAMES */][sType] + " storage unavailable, Ng2Webstorage will use a fallback strategy instead");
+        return STORAGE_AVAILABILITY[sType] = isAvailable;
+    };
+    return WebStorageHelper;
+}());
+
+var _a, _b;
+//# sourceMappingURL=webStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/interfaces/config.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebstorageConfig; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_lib__ = __webpack_require__("./node_modules/ngx-webstorage/dist/constants/lib.js");
+
+var WebstorageConfig = (function () {
+    function WebstorageConfig(config) {
+        this.prefix = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["a" /* LIB_KEY */];
+        this.separator = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["c" /* LIB_KEY_SEPARATOR */];
+        this.caseSensitive = __WEBPACK_IMPORTED_MODULE_0__constants_lib__["b" /* LIB_KEY_CASE_SENSITIVE */];
+        if (config && config.prefix !== undefined) {
+            this.prefix = config.prefix;
+        }
+        if (config && config.separator !== undefined) {
+            this.separator = config.separator;
+        }
+        if (config && config.caseSensitive !== undefined) {
+            this.caseSensitive = config.caseSensitive;
+        }
+    }
+    return WebstorageConfig;
+}());
+
+//# sourceMappingURL=config.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/interfaces/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__("./node_modules/ngx-webstorage/dist/interfaces/config.js");
+/* unused harmony namespace reexport */
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/services/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/webStorage.js");
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__localStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/localStorage.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__localStorage__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sessionStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/sessionStorage.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__sessionStorage__["a"]; });
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/services/localStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocalStorageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/webStorage.js");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+var LocalStorageService = (function (_super) {
+    __extends(LocalStorageService, _super);
+    function LocalStorageService() {
+        return _super.call(this, __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].local) || this;
+    }
+    LocalStorageService.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    LocalStorageService.ctorParameters = function () { return []; };
+    return LocalStorageService;
+}(__WEBPACK_IMPORTED_MODULE_2__webStorage__["a" /* WebStorageService */]));
+
+//# sourceMappingURL=localStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/services/sessionStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SessionStorageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__enums_storage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/enums/storage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__webStorage__ = __webpack_require__("./node_modules/ngx-webstorage/dist/services/webStorage.js");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+var SessionStorageService = (function (_super) {
+    __extends(SessionStorageService, _super);
+    function SessionStorageService() {
+        return _super.call(this, __WEBPACK_IMPORTED_MODULE_1__enums_storage__["a" /* STORAGE */].session) || this;
+    }
+    SessionStorageService.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    SessionStorageService.ctorParameters = function () { return []; };
+    return SessionStorageService;
+}(__WEBPACK_IMPORTED_MODULE_2__webStorage__["a" /* WebStorageService */]));
+
+//# sourceMappingURL=sessionStorage.js.map
+
+/***/ }),
+
+/***/ "./node_modules/ngx-webstorage/dist/services/webStorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebStorageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_index__ = __webpack_require__("./node_modules/ngx-webstorage/dist/helpers/index.js");
+
+var WebStorageService = (function () {
+    function WebStorageService(sType) {
+        if (sType === void 0) { sType = null; }
+        this.sType = sType;
+        this.sType = sType;
+    }
+    WebStorageService.prototype.store = function (raw, value) {
+        var sKey = __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(raw);
+        __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].store(this.sType, sKey, value);
+    };
+    WebStorageService.prototype.retrieve = function (raw) {
+        var sKey = __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(raw);
+        return __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].retrieve(this.sType, sKey);
+    };
+    WebStorageService.prototype.clear = function (raw) {
+        if (raw)
+            __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].clear(this.sType, __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(raw));
+        else
+            __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].clearAll(this.sType);
+    };
+    WebStorageService.prototype.observe = function (raw) {
+        var sKey = __WEBPACK_IMPORTED_MODULE_0__helpers_index__["a" /* KeyStorageHelper */].genKey(raw);
+        return __WEBPACK_IMPORTED_MODULE_0__helpers_index__["b" /* StorageObserverHelper */].observe(this.sType, sKey);
+    };
+    WebStorageService.prototype.isStorageAvailable = function () {
+        return __WEBPACK_IMPORTED_MODULE_0__helpers_index__["c" /* WebStorageHelper */].isStorageAvailable(this.sType);
+    };
+    return WebStorageService;
+}());
+
+//# sourceMappingURL=webStorage.js.map
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/_esm5/BehaviorSubject.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

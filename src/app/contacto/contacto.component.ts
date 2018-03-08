@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation  } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
 
 @Component({
   selector: 'app-contacto',
@@ -9,25 +10,19 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class ContactoComponent implements OnInit {
+contacto = {};
 
-  book = {};
-
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
   }
-
   saveContacto() {
-    console.log("Entrando");
-    this.http.post('/book', this.book)
+    this.http.post('/contacto', this.contacto)
       .subscribe(res => {
-          let id = res['_id'];
-          this.router.navigate(['/contacto', id]);
+       this.router.navigate(['/home']);
         }, (err) => {
           console.log(err);
         }
-
       );
   }
-
 }
